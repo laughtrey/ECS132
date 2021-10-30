@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage{amsmath}
+\numberwithin{equation}{section}
+
+%\usepackage{showframe} % This line can be used to clearly show the new margins
+\usepackage[margin=1.2in]{geometry}
+\newcommand{\eqname}[1]{\tag*{#1}}% Tag equation with name
+
+\begin{document}
+
+\title{	
+	\normalfont\normalsize
+	\textsc{University of California, Davis} \\ % Your university, school and/or department name(s)
+	\vspace{25pt} % Whitespace
+	\rule{\linewidth}{0.5pt} \\ % Thin top horizontal rule
+	\vspace{20pt} % Whitespace
+	{\huge ECS 132 Homework 2} \\ % The assignment title
+	\vspace{12pt} % Whitespace
+	\rule{\linewidth}{2pt} \\ % Thick bottom horizontal rule
+	\vspace{12pt} % Whitespace
+}
+
+\author{Rohan Skariah \and Nathan Krieger \and Raymond Laughrey \and Geoffrey Cook}
+\date{\normalsize\today}
+\maketitle
+
+\begin{abstract}
+This files includes the solutions to HW 2 from ECS 132 Winter Quarter. There are 4 attached .R files for problems 2, 3, 5, and 7.
+\end{abstract}
+
+\section{Question 1}
+
+For question 1, we are given the following information to find the Var(XYZ).
+\\ \indent 
+X is a indicator random variable with probability p
+\\ \indent 
+Y is a indicator random variable with probability q
+\\ \indent
+Z is a indicator random variable with probability r
+
+
+\begin{align} 
+	    \label{Var(XYZ)}
+		\text{Var(XYZ)} &=  E(X^2Y^2Z^2) - [E(XYZ)]^2\eqname{} \\
+		&= [E(X^2) \cdot E(Y^2) \cdot E(Z^2)] - [EX \cdot EY \cdot EZ]^2 \eqname{} \\
+		&= ([Var(X) + (EX)^2] \cdot [Var(Y) + (EY)^2] \cdot [Var(Z) + (EZ)^2]) - [EX \cdot EY \cdot EZ]^2 \eqname{} \\
+		&= ([p(1-p) + p^2] \cdot [q(1-q) + q^2] \cdot [r(1-r) + r^2]) - [p \cdot q \cdot r]^2 \eqname{Using 3.78 and 3.79} \\
+		&= ([p - p^2 + p^2] \cdot [q - q^2 + q^2] \cdot [r - r^2 + r^2]) - [p \cdot q \cdot r]^2 \eqname{} \\
+		&= (p \cdot q \cdot r) - [p \cdot q \cdot r]^2 \eqname{} \\
+		&= pqr - (pqr)^2  = pqr(1-pqr) \eqname{} \\
+\end{align}
+
+
+\section{Question 2}
+
+Please see the file Code2.R
+
+\section{Question 3}
+
+Please see the file Code3.R
+
+\section{Question 4}
+
+For question 4, we are given the following information to find the Var(X).
+\\ \indent 
+A double geometric distribution family has support of all real integers.
+\\ \indent 
+The family is indexed by p and q and we are given the P(X=K) for all the possible Ks.
+
+First, we are going to find an equation to calculate Var(X) 
+\begin{align} 
+	    \label{Var(X) Derived}
+		Var(X) &=  E(X^2) - EX^2 \eqname{} \\
+		&= E(X^2) - EX + EX - EX^2 \eqname{- EX + EX = + 0} \\
+		&= E(X^2 - X) + EX - EX^2 \eqname{Factored into EX} \\
+		&= E[X(X-1)] + EX - EX^2 \eqname{Algebra} \\
+\end{align}
+
+So, now we will solve for EX
+\begin{align} 
+	    \label{EX}
+		EX &=  \sum_{k = -\infty}^{\infty} k \cdot P(X=k) \eqname{} \\
+		&= \sum_{k = -\infty}^{-1} k \cdot P(X=k) + \sum_{k = 0}^{0} k \cdot P(X=k) + \sum_{k = 1}^{\infty} k \cdot P(X=k) \eqname{} \\
+		&= (\sum_{i = -\infty}^{-1} k\cdot c (1-p)^{|k|- 1} \cdot p) + (0 \cdot q) + (\sum_{k = 1}^{\infty} k\cdot c (1-p)^{|k|- 1} \cdot p) \eqname{} \\
+		&= 2 \cdot cp \cdot \frac{1}{[1-(1-p)]^2} \eqname{} \\
+		&= \frac{2cp}{p^2} = \frac{2c}{p} \eqname{} \\
+\end{align}
+
+
+Now, we will solve for E[X(X-1)]
+\begin{align} 
+	    \label{E[X(X-1)]}
+		E[X(X-1)] &=  (c \sum_{X=-\infty}^{-1} X(X-1) \cdot (1-p)^{X-1}\cdot p) + (0 \cdot q) + (c \sum_{X=1}^{\infty}X(X-1) \cdot (1-p)^{X-1} \cdot p) \eqname{} \\
+		&= 2 \cdot (c \sum_{X=1}^{\infty}X(X-1) \cdot (1-p)^{X-1} \cdot p) \eqname{} \\
+		&= 2 \cdot (c \sum_{X=2}^{\infty}p(p-1) \cdot X(X-1) \cdot (1-p)^{X-2}) \eqname{Factor out (1-p)} \\
+    	&= 2 \cdot (c \frac{2p(1-p)}{(1-(1-p))^3}) \eqname{2nd Derivative of Geometric Series} \\
+    	&= \frac{4c \cdot (1-p)}{p^2} \eqname{Algebra} \\
+\end{align}
+
+Since we know EX and E[X(X-1)], we can solve for Var(X) 
+\begin{align} 
+	    \label{Var(X)}
+		Var(X) &= E[X(X-1)] + EX - EX^2 \eqname{} \\
+		&= \frac{4c \cdot (1-p)}{p^2} + \frac{2c}{p} - (\frac{2c}{p})^2 \eqname{} \\
+\end{align}
+
+\section{Question 5}
+
+Please see the file Code5.R
+
+\section{Question 6}
+
+For question 1, we are given the following information.
+\\ \indent 
+X is a random variable with exponential distribution
+\\ \indent 
+We need to prove that cX will have exponential distribution when c is greater than 0
+First, we will find the cumulative distribution function in terms of X
+\begin{align} 
+	    \label{F_Y(t)}
+		\text{F\textsubscript{Y}(t)} &=  P(Y \leq t) \eqname{definition of F\textsubscript{Y}} \\
+		&= P(cX \leq t) \eqname{definition of Y} \\
+		&= P(X \leq \frac{t}{c}) \eqname{algebra} \\
+		&= F\textsubscript{X}(\frac{t}{c}) \eqname{definition of F\textsubscript{X}} \\
+\end{align}
+
+Then, to find the probability density function, we do the following
+\begin{align} 
+	    \label{f_Y(t)}
+		\text{f\textsubscript{Y}(t)} &=  \frac{d}{dt} F\textsubscript{Y}(t) \eqname{definition of F\textsubscript{y}} \\
+		&= \frac{d}{dt} F\textsubscript{x}(\frac{t}{c}) \eqname{from (6.1)} \\
+		&= f\textsubscript{x}(\frac{t}{c}) \cdot \frac{d}{dt}(\frac{t}{c}) \eqname{definition of f\textsubscript{x} and chain rule} \\
+		&= \frac{\lambda}{c} e^{-\frac{\lambda}{c} \cdot t} \cdot \eqname{using 7.40} \\
+\end{align}
+Here, we have the final density in the form of of the exponential family
+\begin{equation}
+    \lambda e ^{- \lambda t} \text{ where } \lambda = \frac{\lambda}{c}, 0 < t < \infty,\text{and } c > 0
+\end{equation}
+This proves that if X has exponential distribution, cX does as well if c is greater than 0.
+
+\section{Question 7}
+
+Please see the file Code7.R
+
+
+
+\end{document}

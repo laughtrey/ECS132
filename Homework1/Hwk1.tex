@@ -1,0 +1,637 @@
+\documentclass{article}
+\usepackage{amsmath}
+\numberwithin{equation}{section}
+
+%\usepackage{showframe} % This line can be used to clearly show the new margins
+\usepackage[margin=1.2in]{geometry}
+\newcommand{\A}{\text{ and }}
+\newcommand{\R}{\text{ or }}
+\newcommand{\Z}{&=}
+\newcommand{\comment}[1]{}
+\newcommand{\eqname}[1]{\tag*{#1}}% Tag equation with name
+
+\begin{document}
+
+\title{	
+	\normalfont\normalsize
+	\textsc{University of California, Davis} \\ % Your university, school and/or department name(s)
+	\vspace{25pt} % Whitespace
+	\rule{\linewidth}{0.5pt} \\ % Thin top horizontal rule
+	\vspace{20pt} % Whitespace
+	{\huge ECS 132 Homework 1} \\ % The assignment title
+	\vspace{12pt} % Whitespace
+	\rule{\linewidth}{2pt} \\ % Thick bottom horizontal rule
+	\vspace{12pt} % Whitespace
+}
+
+\author{Rohan Skariah \and Nathan Krieger \and Raymond Laughrey \and Geoffrey Cook}
+\date{\normalsize\today}
+\maketitle
+
+\begin{abstract}
+This files includes the solutions to HW 1 from ECS 132 Winter Quarter. There are 3 attached .R files for problems 1, 2, and 4.
+\end{abstract}
+
+\section{Question 1}
+
+For question 1, we are using the following syntax to solve the probability.
+\\ \indent 
+X\textsubscript{i} represents Jill's ith roll
+\\ \indent 
+Y\textsubscript{i} represents Jack's ith roll
+\\ \indent
+d represents the target number of dots
+
+\subsection{Find P(Jill wins)}
+
+\begin{align} 
+	    \label{P(Jill wins)}
+		P\text{(Jill wins)} &= P(X_1 \geq 4) \R P(X_1 + X_2 \geq 4 \A X_1 < 4 \A Y_1 < 4) \eqname{} \\
+		& \indent \R P(X_1 + X_2 + X_3 \geq 4 \A X_1 + X_2 < 4 \A Y_1 + Y_2 < 4) \eqname{} \\
+		& \indent \R P(X_1 + X_2 + X_3 + X_4 \geq 4 \A X_1 + X_2 + X_3 < 4 \A Y_1 + Y_2 + Y_3 < 4) \eqname{} \\
+\end{align}
+
+We will then try to find each of these probabilities separately.
+
+\begin{align} 
+    \label{X_1 >= 4}
+        P(X_1 \geq 4) &= P(X_1 = 4) \R P(X_1 = 5) \R P(X_1 = 6) \eqname{Using (2.2)} \\ 
+        &= \frac{1}{6} + \frac{1}{6} + \frac{1}{6} \eqname{} \\
+        &= \frac{3}{6} = \frac{1}{2} \eqname{} \\
+\end{align}
+
+In the second case, we will need to split up the cases even more. To solve the first part of the probability...
+\begin{align} 
+	    \label{P(X1+X2≥4 and X1<4}
+        P(X_1 + X_2 \geq 4 \A X_1 < 4) &= P(X_1 = 1) \cdot P(X_1 + X_2 \geq 4 \mid X_1 = 1) \eqname{Using (2.2)} \\
+        & \R P(X_1 = 2) \cdot P(X_1 + X_2 \geq 4 \mid X_1 = 2) \eqname{} \\ 
+        & \R P(X_1 = 3) \cdot P(X_1 + X_2 \geq 4 \mid X_1 = 3) \eqname{} \\
+\end{align}
+
+We will solve these three cases here...
+\begin{align} 
+	    \label{P(X1= 1)·P(X1+X2≥4|X1= 1)}
+        P(X_1 = 1) \cdot P(X_1 + X_2 \geq 4 \mid X_1 = 1) = \frac{1}{6}\cdot \frac{\frac{1}{6} \cdot \frac{4}{6}}{\frac{1}{6}} = \frac{4}{36}  \eqname{Using (2.7) (2.8)} \\
+\end{align}
+\begin{align} 
+	    \label{P(X1= 2)·P(X1+X2≥4|X1= 2)}
+        P(X_1 = 2) \cdot P(X_1 + X_2 \geq 4 \mid X_1 = 2) = \frac{1}{6}\cdot \frac{\frac{1}{6} \cdot \frac{5}{6}}{\frac{1}{6}} = \frac{5}{36} \eqname{Using (2.7) (2.8)} \\
+\end{align}
+\begin{align} 
+	    \label{P(X1=3)·P(X1+X2≥4|X1=3)}
+        P(X_1 = 3) \cdot P(X_1 + X_2 \geq 4 \mid X_1 = 3) = \frac{1}{6}\cdot \frac{\frac{1}{6} \cdot \frac{6}{6}}{\frac{1}{6}} = \frac{1}{6} \eqname{Using (2.7) (2.8)} \\
+\end{align}
+
+To solve the last part of the second case...
+\begin{align} 
+	    \label{P(Y_1 < 4)}
+	    P(Y_1 < 4) &= P(Y_1 = 1) \R P(Y_1 = 2) \R P(Y_1 = 3)   \eqname{Using (2.2)} \\
+	    &= \frac{1}{6} + \frac{1}{6} + \frac{1}{6} \eqname{Using (2.6)}  \\
+	    &= \frac{3}{6} = \frac{1}{2}  \eqname{} \\
+\end{align}
+
+To combine all of case 2, we do the following.
+\begin{align} 
+	    \label{P(X1+X2≥4 and X1<4 and Y1<4)}
+        P(X_1 + X_2 \geq 4 \A X_1 < 4 \A Y_1 < 4) &= (\frac{4}{36} + \frac{5}{36} + \frac{1}{6}) \cdot \frac{1}{2}  \eqname{} \\
+        &= \frac{5}{24}  \eqname{} \\
+\end{align}
+
+Next, to solve case 3, we will solve the first part of case 3, then the second.
+\begin{align} 
+	    \label{Case 3 (first part)}
+	    P(\text{Case 3 (first part)}) &= P(X_1 + X_2 + X_3 \geq 4 \A X_1 + X_2 < 4) \eqname{Using (2.4)} \\
+        &= P(X_1 = 1 \A X_2 = 1) \cdot P(X_1 + X_2 + X_3 \geq 4 \mid X_1 = 1 \A  X_2 = 1) \eqname{} \\
+        & \R P(X_1 = 1 \A X_2 = 2) \cdot P(X_1 + X_2 + X_3 \geq 4 \mid X_1 = 1 \A  X_2 = 2) \eqname{} \\
+        & \R P(X_1 = 2 \A X_2 = 1) \cdot P(X_1 + X_2 + X_3 \geq 4 \mid X_1 = 2 \A  X_2 = 1) \eqname{} \\
+        &= \left((\frac{1}{6} \cdot \frac{1}{6}) \cdot \frac{\frac{5}{6} \cdot \frac{1}{36}}{\frac{1}{36}} \right) + \left((\frac{1}{6} \cdot \frac{1}{6}) \cdot \frac{\frac{6}{6} \cdot \frac{1}{36}}{\frac{1}{36}} \right) + \left((\frac{1}{6} \cdot \frac{1}{6}) \cdot \frac{\frac{6}{6} \cdot \frac{1}{36}}{\frac{1}{36}} \right) \eqname{} \\
+        &= \frac{5}{216} + \frac{1}{36} + \frac{1}{36} \eqname{} \\
+        &= \frac{17}{216}  \eqname{} \\
+\end{align}
+Now for the second part of case 3.
+\begin{align} 
+	    \label{P(Y1+Y2<4)=P(Y1=1 and Y2=1)}
+	    P(Y_1 + Y_2 < 4) &= P(Y_1 = 1 \A Y_2 = 1) \R P(Y_1 = 1 \A Y_2 = 2) \R P(Y_1 = 2 \A Y_2 = 1) \eqname{Using (2.7) (2.8)} \\
+	    &= \frac{1}{36} + \frac{1}{36} + \frac{1}{36} \eqname{} \\
+	    & = \frac{3}{36} = \frac{1}{12} \eqname{} \\
+\end{align}
+To combine all of case 3...
+\begin{align} 
+	    \label{Case 3 Total}
+	    P(\text{Case 3}) &= P(X_1 + X_2 + X_3 \geq 4 \A X_1 + X_2 < 4 \A Y_1 + Y_2 < 4) \eqname{Using (2.7) (2.8)} \\
+	    &= \text{(1.9)} \cdot \text{(1.10)} \eqname{Using (2.4) (2.6)} \\
+	    &= \frac{17}{216} \cdot \frac{1}{12} = \frac{17}{2592} \eqname{} \\
+\end{align}
+
+To do case 4
+\begin{align} 
+	    \label{Case 4}
+	    P(\text{Case 4}) &= P(X_1 + X_2 + X_3 + X_4 \geq 4 \A X_1 + X_2 + X_3 < 4 \A Y_1 + Y_2 + Y_3 < 4) \eqname{Using (2.6) (2.7)} \\
+	    &= P(X_1 + X_2 + X_3 + X_4 \geq 4) \A P(X_1 + X_2 + X_3 < 4) \A P(Y_1 + Y_2 + Y_3 < 4) \eqname{} \\
+	    &= P(X_1 + X_2 + X_3 + X_4 \geq 4) \A \left(P(X_1 = 1) \cdot P(X_2 = 1) \cdot P(X_3 = 1) \right) \eqname{} \\
+	    & \indent \A \left(P(Y_1 = 1) \cdot P(Y_2 = 1) \cdot P(Y_3 = 1) \right) \eqname{} \\
+	    & \text{In first case, 4 rolls must have sum at least 4} \eqname{} \\
+	    &= 1 \cdot (\frac{1}{6} \cdot \frac{1}{6} \cdot \frac{1}{6}) \cdot (\frac{1}{6} \cdot \frac{1}{6} \cdot \frac{1}{6}) \eqname{} \\
+	    &= 1 \cdot \frac{1}{216} \cdot \frac{1}{216} \eqname{} \\
+	    &= \frac{1}{46656}
+\end{align}
+Finally, to calculate the probability that Jill wins, we add up the probability of the individual cases.
+\begin{align} 
+	    \label{P(Jill Wins)}
+	    P(\text{Jill Wins}) &= \text{(1.7)} + \text{(1.8)} + \text{(1.11)} + \text{(1.12)} \eqname{Using (2.4)} \\
+	    &= \frac{1}{2} + \frac{5}{24} + \frac{17}{2592} + \frac{1}{46656} \eqname{} \\
+	    &= \frac{33355}{46656} \approx .714913
+\end{align}
+
+\subsection{Find P(Jill wins, taking 2 turns to do so)}
+
+This is the same calculation from the probability that Jill wins in 2 turns from 1a.
+\begin{align}
+        P(\text{Jill wins in 2 rolls}) &= P(X_1 + X_2 \geq 4 \A X_1 < 4 \A Y_1 < 4) \eqname{} \\
+        &= P(Y_1 < 4) \cdot P(X_1 < 4) \cdot P(X_1 + X_2 \geq 4 \mid X_1 < 4) \eqname{} \\
+        &= \frac{1}{2} \cdot \frac{5}{12} \eqname{} \\
+        &=\frac{5}{24} \approx 0.208333
+\end{align}
+
+\pagebreak
+%------------------------------1C
+\subsection{Find the probability that the difference between the winner's and loser's totals is equal to 1}
+First consider the following notation: \\
+\indent W\textsubscript{i} = Winner's total; 
+\indent L\textsubscript{i} = Loser's total; 
+\indent X\textsubscript{k} = Number of dots for the Winner's kth roll \\
+\indent Y\textsubscript{k} = Number of dots for the Loser's kth roll \\
+\indent R = which roll the Winner won on   \\
+So,\\
+
+\begin{equation}
+    P(\text{Difference between winner and loser is equal to 1}) 
+\end{equation}
+
+\begin{equation}
+    = P(W_1-L_1 = 1) = P(W_1 = 4, L_1 = 3)  
+\end{equation}
+\begin{equation}
+    = P(\text{Jill's wins on 4, 3, 2, or 1 rolls AND the difference is 1 with Jack})
+\end{equation}
+
+\begin{equation}
+    = P(R = 4, W_1 = 4, L_1 = 3) + P(R = 3, W_1 = 4, L_1 = 3) + P(R = 2, W_1 = 4, L_1 = 3)  \eqname{(Using (2.2)}
+\end{equation}
+
+Now we will solve the probabilities of each roll for Jill and then Jack and then sum the probabilities together at end using mailing tube (2.2):
+\begin{equation}
+    P(R = 4, W_1 = 4, L_1 = 3)
+\end{equation}
+\begin{equation}
+    P(X_1+X_2+X_3+X_4 = 4, Y_1+Y_2+Y_3 = 3, X_1+X_2+X_3 < 4)
+\end{equation}
+\begin{align}
+        \Z P(X_1+X_2+X_3+X_4 = 4 \vert \:  X_1+X_2+X_3 < 4)\cdot P(Y_1+Y_2+Y_3 = 3) \eqname{Using (2.7)} \\
+        \Z \frac{1}{279936} 
+\end{align}
+
+3 rolls: \\
+\begin{equation}
+    P(R = 3, W_1 = 4, L_1 = 3) = P(X_1+X_2+X_3 = 4, Y_1+Y_2 = 3, X_1+X_2 < 4) 
+\end{equation}
+\begin{align}
+    P(X_1+X_2+X_3 = 4 \vert  X_1+X_2 < 4) \cdot P( Y_1+Y_2 = 3) = \frac{1}{72} \cdot \frac{2}{36}\eqname{Using (2.7)} \\
+    \Z \frac{1}{1296}
+\end{align}
+
+2 rolls: 
+
+\begin{align}
+     P(R = 2, W_1 = 4, L_1 = 3)  &= P(X_1+X_2=4, X_1 < 4,Y_1 = 3)\eqname{} \\
+     \Z P(X_1+X_2 = 4 \: \vert \: X_1 < 4) + P(Y_1 = 3)\eqname{Using (2.7)} \\
+     \Z \frac{1}{12} \cdot \frac{1}{6} \eqname{} \\
+     \Z\frac{1}{72}
+\end{align}
+
+Now finding the probability for Jack we have: 
+\begin{equation}
+    P(\text{Jack wins in 1,2,3 rolls AND the difference with Jill is 1})
+\end{equation}
+\begin{equation}
+     P(R = 3, W_1 = 4, L_1 = 3) + P(R = 2, W_1 = 4, L_1 = 3) \eqname{Using (2.2)}
+\end{equation}
+1 Roll: 
+\begin{align}
+    P(Y_1= 4, X_1 < 4) \Z P(Y_1 = 4) \cdot P(X_1 < 4)\eqname{Using (2.6)} \\
+    \Z \frac{1}{6} \cdot \frac{1}{2}\eqname{} \\
+    \Z \frac{1}{36}
+\end{align}
+2 Rolls: 
+\begin{equation}
+    P(Y_1 + Y_2 = 4 , X_1 + X_2 = 3, Y_1 < 4)     
+\end{equation}
+
+\begin{align} 
+    \Z P(Y_1 + Y_2 = 4 \vert \:Y_1 <4) \cdot P(X_1 + X_2 = 3) \eqname{Using (2.7)} \\
+    \Z \frac{3}{36} \cdot \frac{2}{36} \eqname{} \\
+    \Z \frac{1}{216} 
+\end{align}
+
+3 Rolls:
+\begin{equation}
+    P(Y_1+Y_2+Y_3 = 4 , Y_1+Y_2 < 4,X_1+ X_2 +X_3 = 3)
+\end{equation}
+\begin{equation}
+    P(Y_1+Y_2+Y_3 = 4\: \vert \: Y_1+Y_2 < 4) \cdot P(X_1+ X_2 +X_3 = 3)\eqname{Using (2.7)}
+\end{equation}
+
+\begin{align}
+    \frac{1}{72}\cdot \frac{1}{216} = \frac{1}{15552}
+\end{align}
+Now summing all of the probabilities we get: 
+\begin{equation}
+    P(\text{Difference between winner and loose is equal to 1}) = \frac{13195}{279936}    
+\end{equation}
+\begin{equation}
+    \approx 0.047
+\end{equation}
+
+
+
+%-------------------------------- Question 1D
+\pagebreak
+\subsection{The 10 O'Clock News reports that Jill won, but doesn't say what her prize was. Find the probability that her prize was 6 dollars} 
+\begin{align}
+        \label{P(Jill Wins 6)}
+        \text{P(Jill wins \$6)} &= \text{P(wins \$6 one roll) or P(wins \$6 two rolls) or P(wins \$6 three rolls) or P(wins \$6 four rolls)}
+\end{align}
+We will solve each individual probability separately and then combine them at the end
+
+\begin{align}
+        \label{P(Win 6 1 Roll Total)}
+        P(\text{wins \$6 in one roll}) &= P(X_1 = 6) \eqname{} \\
+        &= \frac{1}{6}
+\end{align}
+
+\begin{align}
+        \label{P(Win 6 2 Roll Total)}
+        P(\text{wins \$6 in two rolls}) &= P(X_1 + X_2 = 6 \A X_1 < 4 \A Y_1 < 4) \eqname{} \\
+        &= (P(X_1 = 1) \cdot P(X_1 + X_2 = 6 \mid X_1 = 1) \R P(X_1 = 2) \cdot P(X_1 + X_2 = 6 \mid X_1 = 2) \eqname{} \\
+        & \R P(X_1 = 3) \cdot P(X_1 + X_2 = 6 \mid X_1 = 3)) \A Y_1 < 4 \eqname{} \\
+        &= \left((\frac{1}{6} \cdot \frac{\frac{1}{6} \cdot \frac{1}{6}}{\frac{1}{6}}) + (\frac{1}{6} \cdot \frac{\frac{1}{6} \cdot \frac{1}{6}}{\frac{1}{6}}) + (\frac{1}{6} \cdot \frac{\frac{1}{6} \cdot \frac{1}{6}}{\frac{1}{6}}) \right) \cdot \frac{1}{2} \eqname{} \\
+        &= (\frac{1}{36} + \frac{1}{36} + \frac{1}{36}) \cdot \frac{1}{2} \eqname{} \\
+        &= \frac{1}{12} \cdot \frac{1}{2} \eqname{} \\
+        &= \frac{1}{24}
+\end{align}
+
+\begin{align}
+        \label{P(Win 6 3 Roll EQ)}
+        P(\text{wins \$6 in three rolls}) &= P(X_1 + X_2 + X_3 = 6 \A X_1 + X_2 < 4 \A Y_1 + Y_2 < 4) \eqname{} \\
+        &= P(X_1 + X_2 + X_3 = 6 \A X_1 + X_2 < 4) \A P(Y_1 + Y_2 < 4)
+\end{align}
+First, we will solve the probability that P(Y\textsubscript{1} + Y\textsubscript{2} less than 4)
+\begin{align}
+        \label{P(Y_1 + Y_2 < 4)}
+            P(Y_1 + Y_2 < 4) &= P(Y_1 = 1 \A Y_2 = 1) \R P(Y_1 = 1 \A Y_2 = 2) \R P(Y_1 = 2 \A Y_2 = 1) \eqname{} \\
+            &= \frac{1}{36} + \frac{1}{36} + \frac{1}{36} \eqname{} \\
+            &= \frac{1}{12}
+\end{align}
+Then to solve for the first part of the probability
+\begin{align}
+    \label{P(Win 6 3 Roll 1st part)}
+        P(\text{First Part of } \text{(1.35)} &= P(X_1 + X_2 + X_3 = 6 \A X_1 + X_2 < 4) \eqname{} \\
+        &= P(X_1 = 1 \A X_2 = 1) \cdot P(X_1 + X_2 + X_3 = 6 \mid X_1 = 1 \A X_2 = 1) \eqname{} \\
+        & \R P(X_1 = 1 \A X_2 = 2) \cdot P(X_1 + X_2 + X_3 = 6 \mid X_1 = 1 \A X_2 = 2) \eqname{} \\
+        & \R P(X_1 = 2 \A X_2 = 1) \cdot P(X_1 + X_2 + X_3 = 6 \mid X_1 = 2 \A X_2 = 1) \eqname{} \\
+        &= \frac{1}{36} \cdot \frac{\frac{1}{216} \cdot \frac{1}{36}}{\frac{1}{36}} + \frac{1}{36} \cdot \frac{\frac{1}{216} \cdot \frac{1}{36}}{\frac{1}{36}} + \frac{1}{36} \cdot \frac{\frac{1}{216} \cdot \frac{1}{36}}{\frac{1}{36}} \eqname{} \\
+        &= \frac{1}{7776} + \frac{1}{7776} + \frac{1}{7776} \eqname{} \\
+        &= \frac{1}{2592} \eqname{} \\
+\end{align}
+
+Finally, to find the probability of winning \$6 in 3 rolls, we combine the two cases above.
+\begin{align}
+        \label{P(Win 6 3 Roll Total)}
+        P(\text{wins \$6 in three rolls}) &= \frac{1}{2592} \cdot \frac{1}{12} \eqname{} \\
+        &= \frac{1}{31104}
+\end{align}
+
+The last case is if Jill wins \$6 in four rolls.
+\begin{align}
+        \label{P(Win 6 4 Roll)}
+        P(\text{wins \$6 in three rolls}) &= P(X_1 + X_2 + X_3 + X_4 = 6 \A X_1 + X_2 + X_3 <  4 \A Y_1 + Y_2 + Y_3 < 4) \eqname{} \\
+\end{align}
+
+First, we will solve the probability that P(Y\textsubscript{1} + Y\textsubscript{2} + Y\textsubscript{3} < 4)
+\begin{align}
+        \label{P(Y_1 + Y_2 + Y_3 < 4)}
+            P(Y_1 + Y_2 + Y_3 < 4) &= P(Y_1 = 1 \A Y_2 = 1 \A Y_3 = 1) \eqname{} \\
+            &= \frac{1}{6} \cdot \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{216}
+\end{align}
+Then to solve for the first part of the probability
+\begin{align}
+        \label{P(Win 6 4 Roll 1st part)}
+        P(\text{First Part of }\text{(1.39)}) &= P(X_1 + X_2 + X_3 + X_4= 6 \A X_1 + X_2 + X_3 < 4) \eqname{} \\
+        &= P(X_1 = 1 \A X_2 = 1 \A X_3 = 1) \eqname{} \\
+        & \indent \cdot P(X_1 + X_2 + X_3 + X_4 = 6 \mid X_1 = 1 \A X_2 = 1 \A X_3 = 1) \eqname{} \\
+        &= \frac{1}{216} \cdot \frac{\frac{1}{1296} \cdot \frac{1}{216}}{\frac{1}{216}} \eqname{} \\
+        &= \frac{1}{279936} \eqname{} \\
+\end{align}
+Finally, to find the probability of winning \$6 in 4 rolls, we combine the two cases above.
+\begin{align}
+        \label{P(Win 6 4 Roll Total)}
+        P(\text{wins \$6 in four rolls}) &= \frac{1}{279936} \cdot \frac{1}{216} \eqname{} \\
+        &= \frac{1}{60466176}
+\end{align}
+
+Finally, to find the probability that Jill's winnings are \$6 
+\begin{align}
+        \label{P(Jill Wins 6 Dollar Final)}
+        P(\text{Jill wins \$6}) &= \text{P(wins \$6 one roll) or P(wins \$6 two rolls) or P(wins \$6 three rolls) or P(wins \$6 four rolls)} \eqname{} \\
+        &= \text{(1.33)} + \text{(1.34)} + \text{(1.38)} + \text{(1.42)} \eqname{} \\
+        &= \frac{1}{6} + \frac{1}{24} + \frac{1}{31104} + \frac{1}{60466176} \eqname{} \\
+        &= \frac{12599065}{60466176} \approx .208366
+\end{align}
+
+\subsection{simjj}
+
+Please see the file Code1.R
+
+\section{Question 2}
+
+Please see the file Code2.R
+
+\section{Question 3}
+For the following questions, we are using the following syntax to solve the probability.
+\\ \indent 
+B\textsubscript{i} denotes the number passengers that board stop i.
+\\ \indent 
+T\textsubscript{i} denotes the number passengers trying to board stop i (this includes \textit{YOU} in part 2).
+\\ \indent
+L\textsubscript{i} denotes the number of passengers on the bus when it leaves stop i.
+\\ \indent
+A\textsubscript{i} denotes the number of passengers that alight at stop i.
+\\ We also know that passengers on the bus can alight with a probability of 0.2 independently. In addition, 0, 1, or 2 people can get on the bus with probability 0.5, 0.4, and 0.1 respectively. It is also important that the bus has a limit of 3 passengers and start of empty.
+
+\subsection{Find the probabilities that 0, 1 or 2 waiting passengers at Stop 2 fail to board}
+
+First, in order to find the probability that 2 waiting passengers fail to board, we will represent that as an equation in the following way.
+\begin{align} 
+	    \label{Probability 2 People Fail to Board}
+		P(\textrm{2 people fail to board)} &= P(\text{Bus is full at stop 2 and 2 people try to board})\eqname{} \\
+		&= P(L\textsubscript{1} = 3 \text{ and } A\textsubscript{0} = 0 \text{ and } T\textsubscript{2} = 2) \eqname{} \\
+		&= 0
+\end{align}
+Next, in order to find the probability that 1 waiting passenger fails to board, we will do the following.
+\begin{align} 
+	    \label{Probability 1 People Fail to Board}
+		P(\textrm{1 person fails to board)} &= P(\text{Bus has 2 passengers at stop 2 and 2 people try to board})\eqname{} \\
+		&= P(L\textsubscript{1} = 2 \text{ and } A\textsubscript{2} = 0 \text{ and } T\textsubscript{2} = 2) \eqname{} \\
+		&= P(L\textsubscript{1} = 2 \text{, } A\textsubscript{0} = 0) \cdot P(T\textsubscript{2} = 2) \eqname{} \\
+		&= P(L\textsubscript{1} = 2) \cdot P(A\textsubscript{0} = 0 \mid L\textsubscript{1} = 2) \cdot P(T\textsubscript{2} = 2) \eqname{} \\
+		&= 0.1 \cdot 0.8 \cdot 0.8 \cdot 0.1 \eqname{} \\
+		&= \frac{4}{625} = 0.0064
+\end{align}
+Finally, to calculate the probability that 0 people fail to board, we have to make some assumptions. 
+\\ \indent
+The sum of the probabilities any number of people are unable to to board must equal 1. This is because there are only to possible cases (either someone boards or someone doesn't). In the case that someone (in this case anyone) doesn't board, we previously calculated the probability of that happening. All the other possible cases includes \textit{0 people} failing to board. As such, we can represent the probability that 0 people fail to board as the following. 
+\begin{align} 
+	    \label{Probability 0 People Fail to Board}
+		P(\textrm{0 person fail to board)} &= 1 - P(\text{Anyone Fails to Board})\eqname{} \\
+		&= 1 - (P(\text{1 person fails to board}) + P(\text{2 person fails to board}) \eqname{} \\ & \ \ \  + P(\text{3 person fails to board}) + ....) \eqname{} \\
+		&= 1 - (P(\text{1 person fails to board}) + P(\text{2 person fails to board})) \eqname{} \\
+		&= 1 - (\frac{4}{625} + 0) \eqname{} \\
+		&= 1 - \frac{4}{625} \eqname{} \\
+		&= \frac{621}{625} = 0.9936
+\end{align}
+
+\subsection{You plan to go to Stop 2 to take the bus. Find the probability that you are turned away}
+
+For this problem, we introduce a new term 
+\\ \indent D denotes if \textit{YOU} get rejected from the bus. For example \\
+\indent \indent !D means \textit{YOU} DID NOT get rejected \\
+\indent \indent D means \textit{YOU} DID get rejected \\
+Our goal if to find the probability that \textit{YOU} are rejected at stop 2 when there can be 0, 1, or 2 other people there. This can be represented with the following:
+\begin{align} 
+	    \label{Probability YOU are rejected}
+		P(\text{YOU rejected at stop 2)} &= P(\text{0 people board stop 1 and you are rejected}) \eqname{} \\
+		& \indent \text{  or } P(\text{1 people board stop 1 and you are rejected}) \eqname{} \\
+		& \indent \text{  or } P(\text{2 people board stop 1 and you are rejected}) \eqname{} \\
+		&= P(\text{0 people board stop 1 and 0 people alight and you are rejected}) \eqname{} \\
+		& \text{  or } P(\text{1 people board stop 1 and 0 people alight and you are rejected}) \eqname{} \\
+    	& \text{  or } P(\text{1 people board stop 1 and 1 person alights and you are rejected}) \eqname{} \\
+		& \text{  or } P(\text{2 people board stop 1 and 0 people alight and you are rejected}) \eqname{} \\
+    	& \text{  or } P(\text{2 people board stop 1 and 1 person alights and you are rejected}) \eqname{} \\		
+		& \text{  or } P(\text{2 people board stop 1 and 2 people alight and you are rejected}) \eqname{} \\
+\end{align}
+We will solve each of these probabilities separately and add them at the end. In the first case
+\begin{align} 
+	    \label{1st Case}
+		\text{1st Case} &= P(\text{0 people board stop 1 and 0 people alight and you are rejected}) \eqname{} \\
+		&= P(L\textsubscript{1} = 0 \text{ and } A\textsubscript{2} = 0 \text{ and } D) \eqname{} \\
+		&= P(L_1 = 0 \text{ and } A_2 = 0 \text{ and } T_2 > 3) \eqname{} \\
+		&= 0 \eqname{} \\
+\end{align}
+This is because if there are no passengers on the bus and the limit is 3, then it is impossible for YOU to not board. \\
+Now for the cases where 1 person boards the bus at stop 1.
+\begin{align} 
+	    \label{2nd Case}
+		\text{2nd Case} &= P(\text{1 people board stop 1 and 0 people alight and you are rejected}) \eqname{} \\
+		&= P(L\textsubscript{1} = 1 \text{ and } A\textsubscript{2} = 0 \text{ and } D) \eqname{} \\
+		&= P(L_1 = 1 \text{ and } A_2 = 0 \text{ and } T_2 = 3 \text{ and } D)\eqname{} \\ 
+		&\text{**In this case, T\textsubscript{2} = 3 is the same as B\textsubscript{2} = 2 + You Try to Board**}\eqname{} \\
+		&= P(L_1 = 1) \cdot P(A_2 = 0 \mid L_1 = 1) \cdot P(B_2 = 2) \cdot P(D \mid T_2=3) \eqname{} \\
+		&= 0.4 \cdot 0.8 \cdot 0.1 \cdot \frac{1}{3} \eqname{} \\
+		&= \frac{4}{375} = 0.010667 \eqname{} \\
+\end{align}
+\begin{align} 
+	    \label{3rd Case}
+		\text{3rd Case} &= P(\text{1 people board stop 1 and 1 person alights and you are rejected}) \eqname{} \\
+		&= P(L\textsubscript{1} = 1 \text{ and } A\textsubscript{2} = 1 \text{ and } D) \eqname{} \\
+		&= P(L_1 = 1 \text{ and } A_2 = 1 \text{ and } T_2 > 3 \text{ and } D)\eqname{} \\ 
+		& \text{T\textsubscript{2} greater than 3 is impossible} \eqname{} \\
+		&= 0
+\end{align}
+The final 3 cases represent when 2 people board the bus at stop 1.
+\begin{align} 
+	    \label{4th Case}
+		\text{4th Case} &= P(\text{2 people board stop 1 and 0 people alight and you are rejected}) \eqname{} \\
+		&= P(L\textsubscript{1} = 2 \text{ and } A\textsubscript{2} = 0 \text{ and } D) \eqname{} \\
+		&= P(L_1 = 2 \text{ and } A_2 = 0 \text{ and } T_2 = 3 \text{ and } D)\eqname{} \\ 
+    	&= P(L_1 = 2) \cdot P(A_2 = 0 \mid L_1 = 2) \cdot P(T_2 = 3) \cdot P(D \mid B_2=1) \eqname{} \\
+		&= 0.1 \cdot 0.8 \cdot 0.8 \cdot 0.1 \cdot \frac{2}{3} \eqname{} \\
+		&= \frac{8}{1875} = 0.004267
+\end{align}
+\begin{align} 
+	    \label{5th Case}
+		\text{5th Case} &= P(\text{2 people board stop 1 and 1 person alight and you are rejected}) \eqname{} \\
+		&= P(L\textsubscript{1} = 2 \text{ and } A\textsubscript{2} = 1 \text{ and } D) \eqname{} \\
+		&= P(L_1 = 2 \text{ and } A_2 = 1 \text{ and } T_2 = 3 \text{ and } D)\eqname{} \\ 
+    	&= P(L_1 = 2) \cdot P(A_2 = 1 \mid L_1 = 2) \cdot P(T_2 = 3) \cdot P(D \mid B_2=2) \eqname{} \\
+    	&= P(L_1 = 2) \cdot (P\text{(Passenger 1 alights and Passenger 2 doesn't) or } \eqname{} \\
+    	& \indent P\text{(Passenger 2 alights and Passenger 1 doesn't)}) \cdot P(T_2 = 3) \cdot P(D \mid B_2=2) \eqname{} \\
+    	&= 0.1 \cdot 0.2 \cdot 0.8 \cdot 0.8 \cdot 0.2 \cdot 0.1 \cdot \frac{1}{3} \eqname{} \\
+    	&= \frac{2}{1875} = 0.001067
+\end{align}
+\begin{align} 
+	    \label{6th Case}
+		\text{6th Case} &= P(\text{2 people board stop 1 and 2 people alight and you are rejected}) \eqname{} \\
+		&= P(L\textsubscript{1} = 2 \text{ and } A\textsubscript{2} = 2 \text{ and } D) \eqname{} \\
+		&= P(L_1 = 2 \text{ and } A_2 = 1 \text{ and } T_2 > 3 \text{ and } D)\eqname{} \\ 
+		& \text{T\textsubscript{2} greater than 3 is impossible} \eqname{} \\
+		&= 0
+\end{align}
+
+
+Finally, we will answer the probability that you are rejected at stop 2.
+\begin{align} 
+	    \label{Final Answer Problem 3b}            
+	    P(\text{YOU rejected at stop 2)} &= \text{(3.5)} + \text{(3.6)} + \text{(3.7)} + \text{(3.8)} + \text{(3.9)} + \text{(3.10)} \eqname{} \\
+            &= 0 + \frac{4}{375} + 0 + \frac{8}{1875} + \frac{2}{1875} + 0 \eqname{} \\
+            &= \frac{2}{125} = 0.016
+\end{align}
+
+\section{Question 4}
+Please see the file Code4.R
+
+\pagebreak
+ 
+\section{Question 5}
+For the following questions, we are using the following additional notation to solve the probability. 
+\\ \indent W denotes Jill's winnings.
+\\ \indent We also know that d = 3.
+\subsection{Expected Value of Jills Winnings}
+We are trying to find the expected value of Jills winnings. If we say her winnings are W, then we can try to solve
+\begin{align} 
+	    \label{Expected Jill Winnings}
+		E(W) = EW &= \sum_{c\in A} cP(W=c) \eqname{} \\
+		&= 0 \cdot P(W=0) + 3 \cdot P(W=3) + 4 \cdot P(W=4) + 5 \eqname{} \\
+		& \indent \cdot P(W=5) + 6 \cdot P(W=6) + 7 \cdot P(W=7) + 8 \cdot P(W=8)
+\end{align}
+In the eq above the support for A is \{0, 3, 4, 5, 6, 7, 8\} since that is all the possibilities of the Jills winnings before Jack wins. The maximum winning is 8 because that is the maximum she can roll in 2 turns with her first turn being less than 3 (ie 2 + 6). \\
+
+In order to solve this, we will again solve each probability individually and combine them at the end. They will be split the prize money (ie the set A). \\
+In the first case, we find the probability that her winnings are 3 in 1 roll.
+
+\begin{equation}
+   0\cdot P(W\: = 0) \: = 0 \eqname{} \\
+\end{equation}
+
+\begin{equation}
+    P(W\: = 3) \:= P(\text{Wining on 1, 2, or 3 rolls}) \eqname{} \\
+\end{equation}
+
+\begin{align}
+	    \label{W=3 on 1 rollls}
+        P(W = 3 \text{ on 1 roll}) &= P(X_1 = 3) = \frac{1}{6} \eqname{} \\
+\end{align}
+
+\begin{align} 
+	    \label{W=3 on 2 rollls}
+	    P(W = 3 \text{ on 2 rolls}) &= P(X_1+X_2=3\mid Y_1<3) \eqname{} \\
+	    &=  P(Y_1 < 3) \cdot P(X_1+X_2=3 \mid X_1 <3) \eqname{} \\ 
+	    &= \frac{1}{3}\cdot \frac{1}{18}\cdot = \frac{1}{54} \eqname{} \\
+\end{align}
+
+\begin{align} 
+	    \label{W=3 on 3 rolls}
+	    P(\text{W=3 on 3 rolls}) &= P(X_1+X_2+X_3 = 3 , Y_1+Y_2<3, X_1+X_2<3) \eqname{} \\
+	    &= P(Y_1+Y_2<3 , X_1+X_2<3) \cdot P(X_1+X_2+X_3\vert \: Y_1+Y_2<3 , X_1+X_2 <3) \eqname{} \\
+        &= P(X_1+X_2<3)\cdot P(Y_1+Y_2<3\vert \: X_1+X_2<3) \eqname{} \\ 
+        & \indent \cdot  P(X_1+X_2+X_3\vert \: Y_1+Y_2<3 , X_1+X_2 <3) \eqname{} \\
+        &= \frac{1}{36}\cdot \frac{1}{36}\cdot \frac{1}{6} = \frac{1}{7776} \eqname{} \\
+\end{align}
+Finally, to find P(W=3):
+\begin{align} 
+	    \label{W=3}
+	    P(W\: = 3) &= P(\textrm{Wining on 1, 2, or 3 rolls}) \eqname{} \\
+	    &= \text{(5.2)} + \text{(5.3)} + \text{(5.4)} \eqname{} \\
+	    &= \frac{1}{6} + \frac{1}{54} + \frac{1}{7776} = \frac{1441}{7776}
+\end{align}
+
+\text{The probability for Jill's winnings being \$4,\:\$5, or \$6 follows the same logic as above:}
+
+\begin{equation}
+    P(\text{Jill's winnings being \$4,\:\$5, or \$6}) = \frac{1}{7776}
+\end{equation}
+
+This is because the probability she rolls a 4, 5, 6 on the first term is the same. For the second and third roll, the same thing applies as in the solution above. \\
+
+\text{Now solving for here Winnings being \$7, or \$8}
+\begin{align} 
+	    \label{W=7}
+	    P(W=7) &= P(\text{Jill's winnings being \$7})  \eqname{} \\
+	    &= P(W=7 \text{ in 2 rolls or } W=7 \text{ in 3 rolls}) \eqname{} \\
+	    &= P(X_1+X_2=7\:,X_1<3\:, Y_1 < 3) \text{ or } P(X_1+X_2+X_3 = 7 , Y_1+Y_2<3, X_1+X_2<3)\eqname{} \\
+	    &= P(Y_1 < 3) \cdot P(X_1+X_2=7\vert \: X_1 < 3) \text{ or } \text{(5.4)} \eqname{} \\
+        &= \frac{1}{3}\cdot \frac{1}{18} + \frac{1}{36}\cdot\frac{1}{216} = \frac{145}{7776} \eqname{} \\
+        & \text{The case where you win in 3 rolls has already been solved above.}
+\end{align}
+Finally,
+\begin{align} 
+	    \label{W=8}
+	    P(W=8) &= P(\text{Jill's winnings being \$8})  \eqname{} \\
+	    &= P(W=8 \text{ in 2 rolls or } W=8 \text{ in 3 rolls}) \eqname{} \\
+	    &= P(X_1 + X_2 = 8, Y_1 < 3< X_1 < 3) \text{ or } P(X_1+X_2+X_3 = 8 , \: Y_1+Y_2<3,\: X_1+X_2<3) \eqname{} \\
+	    &= \frac{1}{3}\cdot \frac{1}{36} + \frac{1}{7776} \eqname{} \\ 
+	    &= \frac{1}{108} + \frac{1}{7776} \eqname{} \\
+	    &= \frac{73}{7776} \eqname{} \\
+\end{align}
+
+Now referring back to equation \text{(5.1)} we can plug in the values we just calculated to solve for the expected value:
+
+\begin{align} 
+	    \label{E(W)}
+	    E(W) &= 0+3\:\left( \frac{1441}{7776} \right) +4\:\left(\frac{1441}{7776} \right) + 5\:\left(\frac{1441}{7776}\right) + 6\left( \frac{1441}{7776}\right) + 7\:\left( \frac{145}{7776}\right) + 8\:\left(\frac{73}{7776}\right) \eqname{} \\
+	    &= \frac{9179}{2592} \approx 3.54
+\end{align}
+
+\pagebreak
+\subsection{Variance of Jill's Winnings}
+
+\begin{align}
+    \label{Var(W)}
+        Var(W) &= E\left[ (U-EW)^2) \right] = E\left[ (W-3.54)^2) \right] \eqname{} \\
+        &= \sum_{c \in A} {(c-3.54)^2 \cdot P(W=c)} \eqname{} \\
+        & \text{where A's support is} \:\{0,3,4,5,6,7,8\} \:\text{ which represent the values Z can take on} \eqname{} \\
+        &= (0-3.54)^2 \cdot P(W=0)+ (3-3.54)^2  \cdot P(W=3)+ (4-3.54)^2 \cdot P(W=4) \eqname{} \\
+        & + (5-3.54)^2 \cdot P(W=5) + (6-3.54)^2\cdot P(W=6) + (7-3.54)^2 \cdot P(W=7) \eqname{} \\
+        & + (8-3.54)^2 \cdot P(W=8) \eqname{} \\
+\end{align}
+Now because we haven't calculated P(W = 0), we will do that now using previous notation and then use are previous calculations for the probability of Jill's winning's above
+\begin{align}
+        P(W=0) &= P(\text{Jack wins})\eqname{} \\
+        &= P(\text{Probability Jack wins on the first or second roll})\eqname{} \\
+        &= P(Y_1 \geq 3, \: X_1 < 3) + P(Y_1+Y_2 \geq 3, Y_1 < 3, X_1+X_2 <3)\eqname{} \\
+        &= P(X_1 < 3) \cdot P(Y_1 \geq 3 \vert \: X_1 < 3) \: \eqname{} \\&+P(Y_1 < 3) \cdot P(X_1+X_2 < 3) \cdot   P(Y_1+Y_2 \geq 3 \vert \: Y_1 < 3) \eqname{} \\
+\end{align}
+
+Now solving the left hand side of the sum:
+\begin{align}
+        P(X_1 < 3) \cdot P(Y_1 \geq 3 \mid X_1 < 3) &= \frac{1}{3}\cdot \frac{2}{3} \eqname{} \\
+        \Z \frac{2}{9} 
+\end{align}
+
+Now solving the right hand side of the sum we get:
+\begin{align}
+        P(Y_1 < 3) \cdot P(X_1+X_2 < 3) \cdot P(Y_1+Y_2 \geq 3 \mid Y_1 < 3) &= \frac{1}{3}\cdot \frac{1}{36}\cdot \frac{11}{12} \eqname{} \\ 
+        &= \frac{11}{1296}
+\end{align}
+
+So now adding the left and right hand side we get
+
+\begin{align}
+    P(\text{Jack Win's}) = \frac{2}{9} + \frac{11}{1296} 
+    \Z \frac{299}{1296} \approx .231
+\end{align}
+
+\pagebreak
+
+Now using are previous calculation we can find the various of W,
+
+\begin{align}
+        Var(W) &= (0-3.54)^2 \cdot P(W=0)+ (3-3.54)^2\cdot P(W=3)+ (4-3.54)^2\cdot P(W=4) \eqname{} \\
+       & + (5-3.54)^2 \cdot P(W=5) + (6-3.54)^2\cdot P(W=6) + (7-3.54)^2 \cdot P(W=7) \eqname{} \\
+       & + (8-3.54)^2\cdot P(W=8)\eqname{} \\
+       \Z (0-3.54)^2\cdot \left( \frac{299}{1296}\right) + (3-3.54)^2\cdot \left( \frac{1441}{7776}\right)+ 
+        (4-3.54)^2\cdot \left( \frac{1441}{7776}\right)  \eqname{} \\& + (5-3.54)^2\cdot \left(  \frac{1441}{7776}\right) + (6-3.54)^2 \left( \frac{1441}{7776} \right) + (7-3.54)^2 \left( \frac{145}{7776} \right) \eqname{} \\ & + (8-3.54)^2 \left( \frac{73}{7776} \right) \eqname{} \\
+        \Z \frac{11933363}{2430000} \approx 4.91085
+\end{align}
+
+
+\end{document}
